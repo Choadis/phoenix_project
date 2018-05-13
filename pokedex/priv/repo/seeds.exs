@@ -15,23 +15,28 @@ alias Pokedex.Repo
 alias Pokedex.Type
 alias Pokedex.Pokemon
 
-# Seeds abilities table
+folder = Path.dirname(__ENV__.file)
+file = Path.expand("dex.csv", folder)
 
-File.stream!("/Users/smdahlgren171/Code/Semester Two/phoenix_project/pokedex/priv/repo/dex.csv")
+# Seeds abilities table
+file
+|> File.stream!
 |> CSV.decode(headers: true)
 |> Enum.each( fn %{ "name" => name, "ability1" => ability}  ->
   Repo.get_by(Ability, name: ability) ||
   Repo.insert!(%Ability{name: name, ability: ability})
 end)
 
-File.stream!("/Users/smdahlgren171/Code/Semester Two/phoenix_project/pokedex/priv/repo/dex.csv")
+file
+|> File.stream!
 |> CSV.decode(headers: true)
 |> Enum.each( fn %{ "name" => name, "ability2" => ability}  ->
   Repo.get_by(Ability, name: ability) ||
   Repo.insert!(%Ability{name: name, ability: ability})
 end)
 #
-File.stream!("/Users/smdahlgren171/Code/Semester Two/phoenix_project/pokedex/priv/repo/dex.csv")
+file
+|> File.stream!
 |> CSV.decode(headers: true)
 |> Enum.each( fn %{ "name" => name, "hidden_ability" => ability}  ->
   Repo.get_by(Ability, name: ability) ||
@@ -40,14 +45,16 @@ end)
 #
 # # Seeds types table
 #
-File.stream!("/Users/smdahlgren171/Code/Semester Two/phoenix_project/pokedex/priv/repo/dex.csv")
+file
+|> File.stream!
 |> CSV.decode(headers: true)
 |> Enum.each( fn %{ "name" => name, "type1" => type}  ->
   Repo.get_by(Type, name: type) ||
   Repo.insert!(%Type{name: name, type: type})
 end)
 #
-File.stream!("/Users/smdahlgren171/Code/Semester Two/phoenix_project/pokedex/priv/repo/dex.csv")
+file
+|> File.stream!
 |> CSV.decode(headers: true)
 |> Enum.each( fn %{ "name" => name, "type2" => type}  ->
   Repo.get_by(Type, name: type) ||
@@ -56,7 +63,8 @@ end)
 #
 # Seeds pokemon table
 #
-File.stream!("/Users/smdahlgren171/Code/Semester Two/phoenix_project/pokedex/priv/repo/dex.csv")
+file
+|> File.stream!
 |> CSV.decode(headers: true)
 |> Enum.each( fn %{ "name" => name, "type1" => type1, "type2" => type2, "ability1" => ability1, "ability2" => ability2, "hidden_ability" => hidden}  ->
   # IO.inspect(x)
