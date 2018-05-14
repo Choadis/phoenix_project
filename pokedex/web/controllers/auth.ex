@@ -31,8 +31,9 @@ defmodule Pokedex.Auth do
     cond do
       user && checkpw(given_pass, user.password_hash) -> {:ok, login(conn, user)}
       user -> {:error, :unauthorized, conn}
-      true -> dummy_checkpw()
-      {:error, :not_found, conn}
+      true ->
+        dummy_checkpw()
+        {:error, :not_found, conn}
     end
   end
 

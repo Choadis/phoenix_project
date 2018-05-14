@@ -26,12 +26,12 @@ defmodule Pokedex.UserController do
     case Repo.insert(changeset) do
       {:ok, user} ->
         conn
+        |> Pokedex.Auth.login(user)
+        |> put_flash(:info, "#{user.name} created! Run while you can...")
+        |> redirect(to: pokemon_path(conn, :index))
 
-      |> Pokedex.Auth.login(user)
-      |> put_flash(:info, "#{user.name} created! Run while you can...")
-      |> redirect(to: pokemon_path(conn, :index))
       {:error, changeset} ->
-      render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset)
     end
   end
 
